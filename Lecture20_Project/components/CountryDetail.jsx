@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import countriesData from '../countriesData';
 import './CountryDetail.css'
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 
 const CountryDetail = () => {
     // const countryName = new URLSearchParams(location.search).get('name');
@@ -18,6 +18,18 @@ const CountryDetail = () => {
         const country = countriesData.find((c) => {
             return c.name === countryName
         });
+
+        if(!country.borders){
+            country.borders = []
+        }
+         const borderCountries = country.borders.map((borderCode) => {
+            const borderCountry = countriesData.find((a) => {
+                return a.alpha3Code === borderCode
+            });
+            return borderCountry ? borderCountry.name : borderCode;
+        });
+
+
         console.log(country);
         setCountryData({
             name: country.name,
@@ -29,8 +41,13 @@ const CountryDetail = () => {
             capital: country.capital,
             topLevelDomain: country.topLevelDomain,
             currency: (country.currencies).map((currency) => currency.name).join(', '),
-            language:(country.languages).map((language) => language.name).join(', ')
+            language:(country.languages).map((language) => language.name).join(', '),
+            borders: borderCountries
         })
+
+
+       
+        
     },[countryName])
 
   return (
@@ -53,9 +70,12 @@ const CountryDetail = () => {
                     <p><b>Language: {countryData.language}</b><span className="language"></span></p>
                 </div>
 
-                <div className="border-countries">
+                {(countryData?.borders?.length ?? 0) > 0 && <div className="border-countries">
                     <b>Border Countries: </b> &nbsp; 
-                </div>
+                    {
+                        countryData.borders?.map((border) => <Link key={border} to={`/country/${border}`}>{border}</Link>)
+                    }
+                </div>}
             </div>
         </div>
         </div>
