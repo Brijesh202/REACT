@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import countriesData from '../countriesData';
 import './CountryDetail.css'
+import { useParams } from 'react-router';
 
 const CountryDetail = () => {
-    const countryName = new URLSearchParams(location.search).get('name');
+    // const countryName = new URLSearchParams(location.search).get('name');
+
+    const params = useParams()
+    console.log(params)
+    const countryName = params.country
+
     console.log(countryName);
     
     const [countryData, setCountryData] = useState({});
@@ -25,12 +31,12 @@ const CountryDetail = () => {
             currency: (country.currencies).map((currency) => currency.name).join(', '),
             language:(country.languages).map((language) => language.name).join(', ')
         })
-    },[])
+    },[countryName])
 
   return (
     <main>
         <div className="country-details-container">
-            <span className="back-button"><i className="fa-solid fa-arrow-left-long"></i>&nbsp; &nbsp; Back</span>
+            <span className="back-button" onClick={() => history.back()}><i className="fa-solid fa-arrow-left-long"></i>&nbsp; &nbsp; Back</span>
 
         <div className="country-details">
             <img src={countryData.flag} alt={`${countryData.name} flag`}/>
