@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SearchBar from "./SearchBar";
 import SelectMenu from "./SelectMenu";
 import CountriesList from "./CountriesList";
 import { useOutletContext } from "react-router";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [isDark] = useOutletContext()
+  // const [isDark] = useOutletContext()
+
+  const [isDark] = useContext(ThemeContext)
 
   return (
     <>

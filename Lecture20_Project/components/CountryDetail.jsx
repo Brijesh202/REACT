@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import countriesData from '../countriesData';
 import './CountryDetail.css'
 import { Link, useOutletContext, useParams } from 'react-router';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const CountryDetail = () => {
     // const countryName = new URLSearchParams(location.search).get('name');
 
-    const [isDark] = useOutletContext();
+    // const [isDark] = useOutletContext();
+
+
+    const [isDark] = useContext(ThemeContext)
 
     const params = useParams()
     console.log(params)
