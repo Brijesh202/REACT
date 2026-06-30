@@ -9,6 +9,7 @@
     max-width: 1200px;
     margin-inline: auto;
     margin-top: 32px;
+    min-height: calc(100vh - 90px);
 }
 
 .country-details{
