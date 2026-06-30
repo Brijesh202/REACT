@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import countriesData from '../countriesData'
 import CountryCard from './CountryCard';
+import CountriesListShimmer from './CountriesListShimmer';
 
 const CountriesList = ({query}) => {
   // console.log(countriesData);
+
+  const [loading,setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  },[]);
+
   return (
     <>
-    <div className="countries-container">
+    {loading ? (<CountriesListShimmer/>) : (<div className="countries-container">
     {
       countriesData.filter((country) => country.name.toLocaleLowerCase().includes(query)).map((country) => {
       console.log(country);
@@ -21,7 +30,7 @@ const CountriesList = ({query}) => {
         />
       )
     })}
-  </div>
+  </div>)}
   </>
   )
 }
