@@ -17,8 +17,12 @@ const CountriesList = ({query}) => {
     <>
     {loading ? (<CountriesListShimmer/>) : (<div className="countries-container">
     {
-      countriesData.filter((country) => country.name.toLocaleLowerCase().includes(query)).map((country) => {
-      console.log(country);
+      countriesData.filter((country) =>
+        country.name.toLowerCase()
+            .includes(query) || country.region.toLowerCase().includes(query)
+          )
+            .map((country) => {
+                console.log(country);
       return (
         <CountryCard 
           key={country.name}

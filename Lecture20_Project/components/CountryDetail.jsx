@@ -3,6 +3,7 @@ import countriesData from '../countriesData';
 import './CountryDetail.css'
 import { Link, useOutletContext, useParams } from 'react-router';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 
 const CountryDetail = () => {
     // const countryName = new URLSearchParams(location.search).get('name');
@@ -10,7 +11,7 @@ const CountryDetail = () => {
     // const [isDark] = useOutletContext();
 
 
-    const [isDark] = useContext(ThemeContext)
+    const [isDark] = useTheme()
 
     const params = useParams()
     console.log(params)

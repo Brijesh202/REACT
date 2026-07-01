@@ -1,5 +1,6 @@
 .back-button{
     box-shadow: 0 0 4px 0px rgba(0,0,0,0.2);
+    background-color: var(--element-color);
     padding: 6px 24px;
     border-radius: 4px;
     cursor: pointer;
@@ -47,6 +48,7 @@
 
 .border-countries a{
     box-shadow: 0 0 4px 0px rgba(0,0,0,0.2);
+    background-color: var(--element-color);
     padding: 4px 16px;
     border-radius: 4px;
     font-size: 14px;
