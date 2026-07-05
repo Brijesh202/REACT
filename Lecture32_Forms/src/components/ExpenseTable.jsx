@@ -22,7 +22,11 @@ export const ExpenseTable = ({expenses, setExpenses, setExpense, setEditingRowId
       rowId={rowId}
       setEditingRowId={setEditingRowId}
     />
-     <table className="expense-table" onClick={() => setMenuPosition({})}>
+     <table className="expense-table" onClick={() => {
+      if(setMenuPosition.left){
+        setMenuPosition({})
+      }
+     }}>
           <thead>
             <tr>
               <th>Title</th>
@@ -44,6 +48,9 @@ export const ExpenseTable = ({expenses, setExpenses, setExpense, setEditingRowId
                     width="10"
                     viewBox="0 0 384 512"
                     className="arrow up-arrow"
+                    onClick={() => {
+                      setExpenses((prevState) => [...prevState.sort((a,b) => a.amount - b.amount)])
+                    }}
                   >
                     <title>Ascending</title>
                     <path
@@ -55,6 +62,9 @@ export const ExpenseTable = ({expenses, setExpenses, setExpense, setEditingRowId
                     width="10"
                     viewBox="0 0 384 512"
                     className="arrow down-arrow"
+                    onClick={() => {
+                      setExpenses((prevState) => [...prevState.sort((a,b) => b.amount - a.amount)])
+                    }}
                   >
                     <title>Descending</title>
                     <path
