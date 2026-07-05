@@ -117,6 +117,10 @@ main {
     font-weight: 600;
 }
 
+.clear-sort{
+    cursor: pointer;
+}
+
 .context-menu div:hover {
     background-color: #ddd;
 }
