@@ -2,28 +2,24 @@ import React, { useEffect, useRef, useState } from 'react'
 import Input from './Input'
 import Select from './Select'
 
-export const ExpenseForm = ({setExpenses}) => {
+export const ExpenseForm = ({expense, setExpense, setExpenses, editingRowId, setEditingRowId}) => {
 
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
   const [amount, setAmount] = useState('')
   
-  const [expense, setExpense] = useState({
-    title: '',
-    category: '',
-    amount: ''
-  })
 
   const [errors, setErrors] = useState({})
 
   const validationConfig = {
     title: [
       {required: true, message: 'Please enter title.'}, 
-      {minLength: 5, message:'Title should be at least 5 characters long.'}],
+      {minLength: 2, message:'Title should be at least 2 characters long.'}],
     category: [
       {required: true, message: 'Please enter a category.'}],
     amount: [
-      {required: true, message: 'Please enter an amount.'}]
+      {required: true, message: 'Please enter an amount.'},
+      {pattern: /^[1-9]\d*(\.\d+)?$/, message: 'Please enter a valid number.'}]
   }
 
   const validate = ((formData) => {
@@ -36,7 +32,12 @@ export const ExpenseForm = ({setExpenses}) => {
           return true
         }
 
-        if(rule.minLength && value.length<5){
+        if(rule.minLength && value.length < 2){
+          errorsData[key] = rule.message
+          return true
+        }
+
+        if(rule.pattern && !rule.pattern.test(value)){
           errorsData[key] = rule.message
           return true
         }
@@ -53,6 +54,27 @@ export const ExpenseForm = ({setExpenses}) => {
     e.preventDefault()
     const validateResult = validate(expense)
     if(Object.keys(validateResult).length){
+      return
+    }
+
+    if(editingRowId){
+      setExpenses((prevState) => {
+        return (
+          prevState.map((prevExpense) => {
+            if(prevExpense.id === editingRowId){
+              return {...expense,id:editingRowId}
+            }
+            return prevExpense
+          })
+        )
+      })
+       setExpense(
+      {
+        title: '',
+        category: '',
+        amount: ''
+      })
+      setEditingRowId('')
       return
     }
 
@@ -119,7 +141,7 @@ export const ExpenseForm = ({setExpenses}) => {
           onChange={handleChange} 
           error={errors.amount}
         />
-        <button className="add-btn">Add</button>
+        <button className="add-btn">{editingRowId ? 'Save' : 'Add'}</button>
     </form>
   )
 }
