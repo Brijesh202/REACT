@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -13,7 +13,9 @@ function App() {
     <>
       <Header />
       <main className='px-4 py-4 md:px-8'>
-        <Outlet />
+        <Suspense fallback={<h1 className='text-xl'>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   )
